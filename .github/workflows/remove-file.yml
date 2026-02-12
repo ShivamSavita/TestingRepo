@@ -1,26 +1,28 @@
-name: Auto remove xyz.html from PR
+name: Ignore xyz.html when merging to beta
 
 on:
   pull_request:
     branches:
-      - main
+      - beta
+    types: [closed]
 
 jobs:
-  remove-file:
+  remove-after-merge:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR branch
+      - name: Checkout beta branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: beta
 
-      - name: Remove unwanted file
+      - name: Remove file from beta if added by PR
         run: |
           if [ -f "xyz.html" ]; then
             git rm -f xyz.html
             git config user.name "github-actions"
             git config user.email "github-actions@github.com"
-            git commit -m "Auto remove xyz.html from PR"
+            git commit -m "Auto remove xyz.html after PR merge"
             git push
           fi
