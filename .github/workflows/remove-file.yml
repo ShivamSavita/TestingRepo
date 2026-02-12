@@ -3,7 +3,7 @@ name: Ignore xyz.html when merging to beta
 on:
   pull_request:
     branches:
-      - beta
+      - main
     types: [closed]
 
 jobs:
