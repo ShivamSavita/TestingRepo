@@ -3,7 +3,7 @@ name: Auto remove xyz.html from PR
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   remove-file:
